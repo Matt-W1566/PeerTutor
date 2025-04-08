@@ -8,6 +8,7 @@ import Signup from './components/pages/Signup'
 import FAQ from './components/pages/FAQ'
 import StudentForm from './components/pages/StudentForm'
 import TutorForm from './components/pages/TutorForm'
+import Messages from './components/pages/Messages'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path='/faq' element={<FAQ />} />
         <Route path='/studentForm' element={<StudentForm />} />
         <Route path='/tutorForm' element={<TutorForm />} />
+        <Route path='/messages' element={<Messages />} />
       </Routes>
     </Router>
   )
