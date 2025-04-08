@@ -1,41 +1,47 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs'); // using bcryptjs to avoid native binary issues
+const bcrypt = require('bcryptjs'); // using bcryptjs
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Signup Route – for both students and tutors (fields sent by front end)
+// Signup route: adapted for both student and tutor registrations
 router.post('/signup', async (req, res) => {
   try {
+    // Destructure keys from req.body.
+    // Notice we expect "availabilities" (for tutor data) from the front end.
     const {
       name,
       email,
       password,
       role,
       grade,
-      subjects,
-      availability, // For student requests; or tutor availability if needed
+      subjects,       // Array (e.g., ["math", "science"])
+      availabilities, // Array of objects (for tutors), e.g., [{ day: "Mon", startTime: "09:00", endTime: "10:00" }]
       learningStyle,
-      teachingStyle,
-      availabilities // For tutor registration as an array of objects (optional)
+      teachingStyle
     } = req.body;
 
-    // Check if user exists
+    // Basic validation for required fields
+    if (!name || !email || !password || !role) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    // Hash password
+    // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // If registering as a tutor and availabilities are provided,
-    // transform the availabilities array (if applicable)
-    let formattedAvailability = availability || [];
+    // Format availability for tutors. Front end sends "availabilities"
+    // as an array of objects; convert them to an array of strings.
+    let formattedAvailability = [];
     if (role === 'tutor' && availabilities && Array.isArray(availabilities)) {
-      // Convert each availability object {day, startTime, endTime} to a string format.
       formattedAvailability = availabilities.map(avail => {
+        // Ensure day, startTime, endTime exist; default to empty strings if not.
         const day = avail.day || '';
         const start = avail.startTime || '';
         const end = avail.endTime || '';
@@ -43,19 +49,20 @@ router.post('/signup', async (req, res) => {
       });
     }
 
-    // Create the new user
+    // Create a new user document using the provided data.
     const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
       role,
       grade,
-      subjects,           // This should be an array of subjects
-      availability: formattedAvailability,
+      subjects,  // Directly take the array sent from the front end
+      availability: formattedAvailability,  // Use our formatted availability for tutors (if any)
       learningStyle,
       teachingStyle
     });
 
+    // Return success
     res.status(201).json({ message: 'User created successfully!' });
   } catch (err) {
     console.error("Signup error:", err);
@@ -63,42 +70,34 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// Login Route – returns a JWT token and sets it as an HTTP-only cookie
+// Login route remains the same
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find user
+    // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
 
-    // Compare password
+    // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
 
-    // Create JWT token
+    // Create a JWT token
     const token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
 
-    // Set the token as an HTTP-only cookie
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // true in production
-      sameSite: 'lax',
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
-    });
-
-    // Return a success response along with minimal user info
+    // Return the token and user info
     res.status(200).json({
       message: 'Logged in successfully',
-      token, // you can also return the token in the JSON
+      token,
       user: {
         id: user._id,
         name: user.name,
