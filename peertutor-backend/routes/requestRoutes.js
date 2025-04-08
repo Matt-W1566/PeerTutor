@@ -1,4 +1,3 @@
-// routes/requestRoutes.js
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../Middleware/authMiddleware');
@@ -8,10 +7,10 @@ const { sendEmail } = require('../utils/emails');
 const { findBestTutor } = require('../utils/matching');
 
 // STUDENT CREATES A REQUEST (auto-match)
-// This route now expects: { subject, date, time } in the JSON body.
+// This endpoint expects a JSON body containing { subject, date, time } for student requests.
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    // Ensure only a student can create a new request
+    // Only a student can create a new tutoring request
     if (req.user.role !== 'student') {
       return res.status(403).json({ error: 'Only students can create requests' });
     }
@@ -21,10 +20,10 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(400).json({ error: 'Subject, date, and time are required.' });
     }
 
-    // Combine date and time into one string (you can adjust the format as needed)
+    // Combine date and time into a single string (adjust formatting as needed)
     const preferredTime = `${date} ${time}`;
 
-    // Create new tutoring request with preferredTimes as an array containing the single entry
+    // Create a new tutoring request; preferredTimes is an array of strings.
     let newRequest = await TutoringRequest.create({
       studentId: req.user.userId,
       subject,
@@ -32,30 +31,30 @@ router.post('/', authMiddleware, async (req, res) => {
       status: 'pending'
     });
 
-    // Attempt to auto-match a tutor using the provided subject and preferredTime
+    // Attempt to auto-match a tutor based on subject and preferredTime
     const bestTutor = await findBestTutor(subject, [preferredTime]);
     if (bestTutor) {
       newRequest.matchedTutorId = bestTutor._id;
       newRequest.status = 'matched';
       await newRequest.save();
-
-      // Optional: send an email notification
-      // const student = await User.findById(req.user.userId);
-      // await sendEmail({
-      //   to: student.email,
-      //   subject: `Tutor matched for ${subject}`,
-      //   text: `We have matched you with tutor ${bestTutor.name}.`
-      // });
+      
+     
+      const student = await User.findById(req.user.userId);
+      await sendEmail({
+        to: student.email,
+        subject: `Tutor Matched for ${subject}`,
+        text: `We have matched you with tutor ${bestTutor.name}.`
+      });
     }
 
     res.status(201).json(newRequest);
   } catch (err) {
-    console.error(err);
+    console.error("Request creation error:", err);
     res.status(500).json({ error: err.message });
   }
 });
 
-// TUTOR ACCEPTS A REQUEST MANUALLY (existing code)
+// TUTOR ACCEPTS REQUEST MANUALLY
 router.patch('/:requestId/match', authMiddleware, async (req, res) => {
   try {
     if (req.user.role !== 'tutor') {
@@ -64,7 +63,6 @@ router.patch('/:requestId/match', authMiddleware, async (req, res) => {
 
     const { requestId } = req.params;
 
-    // Update the request by setting the tutor's ID and changing the status
     const updatedRequest = await TutoringRequest.findByIdAndUpdate(
       requestId,
       {
@@ -78,25 +76,20 @@ router.patch('/:requestId/match', authMiddleware, async (req, res) => {
       return res.status(404).json({ error: 'Request not found' });
     }
 
-    // Retrieve the student's info for email notification
     const student = await User.findById(updatedRequest.studentId);
-    if (!student) {
-      // Handle not finding the student if needed
-    }
-
-    const subject = updatedRequest.subject;
-    const emailSubject = `Tutor Accepted Your ${subject} Request!`;
-    const emailText = `Hi ${student.name}, your request for ${subject} has been accepted by a tutor! Please log in to confirm session details.`;
+    // Build and send an email
+    const subjectText = `Tutor Accepted Your ${updatedRequest.subject} Request!`;
+    const emailText = `Hi ${student.name}, your request for ${updatedRequest.subject} has been accepted by a tutor! Please log in to confirm session details.`;
 
     await sendEmail({
       to: student.email,
-      subject: emailSubject,
+      subject: subjectText,
       text: emailText
     });
 
     res.status(200).json(updatedRequest);
   } catch (err) {
-    console.error(err);
+    console.error("Tutor match error:", err);
     res.status(400).json({ error: err.message });
   }
 });
