@@ -1,4 +1,4 @@
-// requestRoutes.js
+// routes/requestRoutes.js
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../Middleware/authMiddleware');
@@ -7,39 +7,45 @@ const User = require('../models/User');
 const { sendEmail } = require('../utils/emails');
 const { findBestTutor } = require('../utils/matching');
 
-// 1) STUDENT CREATES A REQUEST (auto-match)
+// STUDENT CREATES A REQUEST (auto-match)
+// This route now expects: { subject, date, time } in the JSON body.
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    // Only a student can create a new request
+    // Ensure only a student can create a new request
     if (req.user.role !== 'student') {
       return res.status(403).json({ error: 'Only students can create requests' });
     }
 
-    const { subject, preferredTimes } = req.body;
-    if (!subject || !preferredTimes?.length) {
-      return res.status(400).json({ error: 'Subject and preferredTimes are required.' });
+    const { subject, date, time } = req.body;
+    if (!subject || !date || !time) {
+      return res.status(400).json({ error: 'Subject, date, and time are required.' });
     }
 
-    // 1) Create request
+    // Combine date and time into one string (you can adjust the format as needed)
+    const preferredTime = `${date} ${time}`;
+
+    // Create new tutoring request with preferredTimes as an array containing the single entry
     let newRequest = await TutoringRequest.create({
       studentId: req.user.userId,
       subject,
-      preferredTimes,
+      preferredTimes: [preferredTime],
       status: 'pending'
     });
 
-    // 2) Attempt to auto-match a tutor
-    const bestTutor = await findBestTutor(subject, preferredTimes);
+    // Attempt to auto-match a tutor using the provided subject and preferredTime
+    const bestTutor = await findBestTutor(subject, [preferredTime]);
     if (bestTutor) {
       newRequest.matchedTutorId = bestTutor._id;
       newRequest.status = 'matched';
       await newRequest.save();
 
-      // OPTIONAL: email the student to say a tutor was found
-      // or email the tutor to confirm they've been assigned a new request.
-      // For example:
-      // const studentEmail = ... fetch from DB if not in JWT
-      // await sendEmail({ to: studentEmail, subject: "...", text: "..." });
+      // Optional: send an email notification
+      // const student = await User.findById(req.user.userId);
+      // await sendEmail({
+      //   to: student.email,
+      //   subject: `Tutor matched for ${subject}`,
+      //   text: `We have matched you with tutor ${bestTutor.name}.`
+      // });
     }
 
     res.status(201).json(newRequest);
@@ -49,7 +55,7 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-// 2) TUTOR ACCEPTS REQUEST MANUALLY (existing code)
+// TUTOR ACCEPTS A REQUEST MANUALLY (existing code)
 router.patch('/:requestId/match', authMiddleware, async (req, res) => {
   try {
     if (req.user.role !== 'tutor') {
@@ -58,7 +64,7 @@ router.patch('/:requestId/match', authMiddleware, async (req, res) => {
 
     const { requestId } = req.params;
 
-    // 1) Update the request
+    // Update the request by setting the tutor's ID and changing the status
     const updatedRequest = await TutoringRequest.findByIdAndUpdate(
       requestId,
       {
@@ -66,29 +72,26 @@ router.patch('/:requestId/match', authMiddleware, async (req, res) => {
         status: 'matched'
       },
       { new: true }
-    ).populate('studentId'); // so we can get student's email
+    ).populate('studentId');
 
     if (!updatedRequest) {
       return res.status(404).json({ error: 'Request not found' });
     }
 
-    // 2) Get the student's info
+    // Retrieve the student's info for email notification
     const student = await User.findById(updatedRequest.studentId);
     if (!student) {
-      // Possibly handle "Student not found" error
+      // Handle not finding the student if needed
     }
 
-    // 3) Build the email
-    const subject = `Tutor Accepted Your ${updatedRequest.subject} Request!`;
-    const text = `Hi ${student.name}, your request for ${updatedRequest.subject} was accepted by a tutor!
-                  Please log in to confirm session details.`;
+    const subject = updatedRequest.subject;
+    const emailSubject = `Tutor Accepted Your ${subject} Request!`;
+    const emailText = `Hi ${student.name}, your request for ${subject} has been accepted by a tutor! Please log in to confirm session details.`;
 
-    // 4) Send the email
     await sendEmail({
       to: student.email,
-      subject,
-      text
-      // optional: html: `<b>...`
+      subject: emailSubject,
+      text: emailText
     });
 
     res.status(200).json(updatedRequest);

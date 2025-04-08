@@ -23,7 +23,7 @@ mongoose
 const authRoutes = require('./routes/authRoutes');
 const requestRoutes = require('./routes/requestRoutes');
 
-// Use routes (prefix them, e.g. "/api/auth")
+// Use routes (prefix them appropriately)
 app.use('/api/auth', authRoutes);
 app.use('/api/requests', requestRoutes);
 

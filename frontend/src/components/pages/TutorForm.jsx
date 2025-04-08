@@ -1,7 +1,9 @@
+// TutorForm.jsx
 import React, { useState, useEffect, useRef } from 'react'
 import './TutorForm.css'
 
 const TutorForm = () => {
+  // Define available subjects and weekdays for reference
   const availableSubjects = [
     { label: 'Math', value: 'math' },
     { label: 'Science', value: 'science' },
@@ -35,13 +37,14 @@ const TutorForm = () => {
     'Sun'
   ]
 
+  // State for form data and availabilities
   const [formData, setFormData] = useState({ subjects: [] })
   const [availabilities, setAvailabilities] = useState([
     { day: '', startTime: '', endTime: '' }
   ])
-
   const [subjectInput, setSubjectInput] = useState('')
   const [suggestions, setSuggestions] = useState([])
+
   const autoCompleteRef = useRef()
 
   useEffect(() => {
@@ -117,13 +120,29 @@ const TutorForm = () => {
     setAvailabilities(newAvailabilities)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const completeFormData = {
       ...formData,
       availabilities: availabilities
     }
-    console.log('Form submitted:', completeFormData)
+    // Replace console.log with a fetch POST call.
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(completeFormData)
+      })
+      const data = await response.json()
+      if (response.ok) {
+        console.log('Form submitted successfully:', data)
+        // Optionally, navigate or show a success message to the user.
+      } else {
+        console.error('Error submitting form:', data.error)
+      }
+    } catch (err) {
+      console.error('Network error:', err)
+    }
   }
 
   const selectedSubjects = formData.subjects
