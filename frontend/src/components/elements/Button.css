@@ -11,6 +11,7 @@
     border-radius: 8px;
     background-color: rgb(65, 115, 255);
     color: white;
+    max-width: 20em;
     border-radius: 10em;
     width: 100%;
 }

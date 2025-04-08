@@ -1,0 +1,165 @@
+.signup-wrapper {
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 450px;
+    width: 100%;
+    padding: 2rem;
+    padding-top: 1rem;
+    border-radius: 2rem;
+    background-color: hsl(189, 100%, 95%);
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.1);
+    color: #1E0E62;
+}
+
+.form-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form title styling */
+.form-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2em;
+}
+
+/* Form group spacing */
+.form-group {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+/* ============================== */
+/* Multi-Select (Auto-complete)   */
+/* ============================== */
+
+.multi-select-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1em;
+    border: 1px solid rgba(21, 20, 57, 0.2);
+    border-radius: 10em;
+    padding: 0.5rem 1rem;
+    background-color: white;
+}
+
+.subject-input {
+    width: 100%;
+    font-size: 1.5em;
+    padding: 2vh;
+    border: none;
+    outline: none;
+}
+
+.selected-tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.token {
+    background-color: rgb(65, 115, 255);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 10em;
+    font-size: 1.2em;
+    display: inline-flex;
+    align-items: center;
+}
+
+.remove-token {
+    background: transparent;
+    border: none;
+    color: white;
+    margin-left: 0.3rem;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+/* Auto-complete suggestion dropdown */
+.autocomplete-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid rgba(21, 20, 57, 0.2);
+    border-top: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.suggestion-item {
+    padding: 0.5em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: rgba(21, 20, 57, 0.1);
+}
+
+.availability-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1em;
+}
+
+.select-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.select-wrapper select {
+    padding: 1vh;
+    font-size: 1.5em;
+    color: rgb(0, 0, 0);
+    border: 1px solid rgba(21, 20, 57, 0.2);
+    border-radius: 10em;
+    background-color: white;
+    width: 100%;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-image: none;
+}
+
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 2em;
+    top: 50%;
+    transform: translateY(-25%) rotate(0deg);
+    width: 0.7em;
+    height: 0.7em;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.41.59L6 5.17 10.59.59 12 2l-6 6-6-6z' fill='black'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: transform 0.2s ease;
+}
+
+.select-wrapper:hover::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.time-input {
+    padding: 2vh;
+    font-size: 1.5em;
+    color: rgb(0, 0, 0);
+    border: 1px solid rgba(21, 20, 57, 0.2);
+    border-radius: 10em;
+    background-color: white;
+}
