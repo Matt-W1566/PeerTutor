@@ -2,6 +2,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/PeerTutor/',  // adjust to your repository name
+  base: '/',  // adjust to your repository name
   plugins: [react()],
 });
