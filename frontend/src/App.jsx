@@ -1,5 +1,6 @@
+// App.jsx
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/sections/Navbar'
 import Home from './components/pages/Home'
 import Login from './components/pages/Login'
@@ -12,9 +13,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup'element={<Signup />}/>
-        <Route path='/faq'element={<FAQ />}/>
+        <Route path='/PeerTutor/login' element={<Login />} />
+        <Route path='/PeerTutor/signup' element={<Signup />} />
+        <Route path='/PeerTutor/faq' element={<FAQ />} />
       </Routes>
     </Router>
   )
