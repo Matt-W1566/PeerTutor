@@ -136,7 +136,7 @@ const TutorForm = () => {
         <h1 className="form-title">Tutor Registration</h1>
 
         <div className="form-group">
-          <h3>Select Subjects</h3>
+          <h3>Select Subjects:</h3>
           <div className="multi-select-container" ref={autoCompleteRef}>
             <div className="selected-tokens">
               {selectedSubjects.map(subject => (
@@ -177,7 +177,7 @@ const TutorForm = () => {
         </div>
 
         <div className="form-group">
-          <h3>Set Your Weekly Availability</h3>
+          <h3>Set Your Weekly Availability:</h3>
           {availabilities.map((availability, index) => (
             <div key={index} className="availability-row">
               <div className="select-wrapper">

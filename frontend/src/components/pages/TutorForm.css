@@ -1,16 +1,17 @@
 .signup-wrapper {
-    margin: 2rem auto;
+    margin: auto;
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     max-width: 450px;
     width: 100%;
+    margin: 2rem auto;
     padding: 2rem;
-    padding-top: 1rem;
     border-radius: 2rem;
     background-color: hsl(189, 100%, 95%);
     box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.1);
     color: #1E0E62;
+    padding-top: 1rem;
 }
 
 .form-wrapper {
@@ -19,39 +20,43 @@
     flex-direction: column;
 }
 
-/* Form title styling */
 .form-title {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 2em;
+    font-size: 5.5vh;
+    font-weight: 750;
+    line-height: 1.25em;
 }
 
-/* Form group spacing */
 .form-group {
     margin-bottom: 1.5rem;
     width: 100%;
 }
 
-/* ============================== */
-/* Multi-Select (Auto-complete)   */
-/* ============================== */
+h3 {
+    font-size: 2vh;
+    color: rgba(21, 20, 57, 0.4);
+    letter-spacing: 0.05em;
+    text-align: left;
+}
 
 .multi-select-container {
     position: relative;
     width: 100%;
-    margin-bottom: 1em;
-    border: 1px solid rgba(21, 20, 57, 0.2);
-    border-radius: 10em;
-    padding: 0.5rem 1rem;
-    background-color: white;
 }
 
 .subject-input {
-    width: 100%;
-    font-size: 1.5em;
+    display: flex;
+    align-items: center;
     padding: 2vh;
-    border: none;
-    outline: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(21, 20, 57, 0.2);
+    font-size: 1.5em;
+    transition: all 0.2s ease;
+    border-radius: 9999px;
+    color: rgb(0, 0, 0);
+    border-radius: 10em;
+    width: 100%;
+    margin-bottom: 0.8em;
 }
 
 .selected-tokens {
