@@ -28,6 +28,7 @@ const Login = () => {
       if (response.ok) {
         // Optionally, store the token in localStorage or context:
         localStorage.setItem('token', data.token)
+        window.location.reload()
         console.log('Login successful:', data)
         navigate('/')
       } else {
