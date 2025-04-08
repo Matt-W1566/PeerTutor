@@ -2,7 +2,7 @@
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://matt-w1566.github.io/frontend",
+  "homepage": "https://matt-w1566.github.io/PeerTutor",
   "type": "module",
   "scripts": {
     "dev": "vite",
