@@ -16,7 +16,6 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    navigate('/PeerTutor/#/login');
   };
 
   return (
