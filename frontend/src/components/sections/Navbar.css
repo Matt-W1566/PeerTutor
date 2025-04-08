@@ -1,7 +1,10 @@
 .nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    width: 68%;
+    padding: 4vh 0;
 }
 
 .nav-title {

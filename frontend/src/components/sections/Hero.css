@@ -3,13 +3,14 @@
     align-items: center;
     justify-content: center;
     margin: auto;
-    width: 80%;
+    width: 68%;
 }
 
 .hero-title {
     font-size: 3.5vw;
     font-weight: 750;
-    margin-bottom: 0.5em;
+    margin-bottom: 0em;
+    line-height: 1.25em;
 }
 
 .hero-description {
@@ -17,21 +18,24 @@
     color: rgba(21, 20, 57, 0.4);
     letter-spacing: .05em;
     margin-bottom: 15%;
+    line-height: 1.6em;
 }
 
 .hero-img {
-    width: 50%;
+    width: 45%;
     height: auto;
+    margin-left: 4em;
+    border-radius: 5.5em;
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .hero-text {
     width: 50%;
-    padding: 2.5em;
 }
 
 .hero-buttons {
     display: flex;
-    gap: 1em;
-    margin: 2em;
     justify-content: space-between;
+    gap: 6%;
+    width: 100%;
 }
