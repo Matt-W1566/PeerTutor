@@ -6,9 +6,9 @@ const Navbar = () => {
     <div className='nav'>
         <h1 className='nav-title'><a href='/'>PeerTutor</a></h1>
         <ul className='nav-list'>
-            <li className='nav-msg'><a href='/messages'>Messages</a></li>
-            <li className='nav-faq'><a href='/faq'>FAQ</a></li>
-            <li className='nav-login'><a href='/login'>Login</a></li>
+            <li className='nav-msg'><a href='/PeerTutor/messages'>Messages</a></li>
+            <li className='nav-faq'><a href='/PeerTutor/faq'>FAQ</a></li>
+            <li className='nav-login'><a href='/PeerTutor/login'>Login</a></li>
         </ul>
     </div>
   )
