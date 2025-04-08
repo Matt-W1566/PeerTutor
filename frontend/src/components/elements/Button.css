@@ -6,13 +6,14 @@
     justify-content: center;
     border: none;
     cursor: pointer;
-    font-size: 2.5vh;
+    font-size: 1.5em;
     transition: all 0.2s ease;
     border-radius: 8px;
     background-color: rgb(65, 115, 255);
     color: white;
     border-radius: 10em;
     width: 100%;
+    max-width: 15em;
 }
     
 .btn:hover {
