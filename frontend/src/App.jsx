@@ -12,10 +12,10 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path='/PeerTutor/' element={<Home />} />
-        <Route path='/PeerTutor/#/login' element={<Login />} />
-        <Route path='/PeerTutor/#/signup'element={<Signup />}/>
-        <Route path='/PeerTutor/#/faq'element={<FAQ />}/>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/faq' element={<FAQ />} />
       </Routes>
     </Router>
   )
