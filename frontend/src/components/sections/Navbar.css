@@ -34,7 +34,7 @@ a:hover {
 .nav-login a {
     border: 2px solid rgb(80, 130, 255);
     border-radius: 9999px;
-    padding: 0.4em 1em;
+    padding: 0.45em 1em;
     transition: all 0.2s ease;
 }
 
