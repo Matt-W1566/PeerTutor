@@ -26,13 +26,13 @@ const TutorForm = () => {
   ]
 
   const weekDays = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday'
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun'
   ]
 
   const [formData, setFormData] = useState({ subjects: [] })
@@ -187,7 +187,7 @@ const TutorForm = () => {
                   onChange={e => handleAvailabilityChange(index, e)}
                   required
                 >
-                  <option value="">Select day</option>
+                  <option value="">Day</option>
                   {weekDays.map(day => (
                     <option key={day} value={day}>
                       {day}
