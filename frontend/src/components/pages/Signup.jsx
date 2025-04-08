@@ -1,4 +1,6 @@
+// src/components/pages/Signup.jsx
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Signup.css'
 
 const Signup = () => {
@@ -12,14 +14,35 @@ const Signup = () => {
     learningstyle: ''
   })
 
-  const handleChange = e => {
+  const [message, setMessage] = useState('')
+  const navigate = useNavigate()
+  const API_URL = import.meta.env.VITE_API_URL
+
+  const handleChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Signup submitted:', formData)
+    try {
+      const response = await fetch(`${API_URL}/api/auth/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      const data = await response.json()
+      if (response.ok) {
+        setMessage(data.message || 'User created successfully!')
+        // Optionally, navigate to login or home page upon success:
+        // navigate('/login')
+      } else {
+        setMessage(data.error || 'Signup failed')
+      }
+    } catch (error) {
+      console.error('Network error:', error)
+      setMessage('Network error. Please try again later.')
+    }
   }
 
   return (
@@ -103,7 +126,9 @@ const Signup = () => {
             </select>
           </div>
 
-          <label htmlFor="learningstyle">{formData.role === 'tutor' ? 'Teaching Style' : 'Learning Style'}:</label>
+          <label htmlFor="learningstyle">
+            {formData.role === 'tutor' ? 'Teaching Style' : 'Learning Style'}:
+          </label>
           <div className="select-wrapper">
             <select
               id="learningstyle"
@@ -122,6 +147,7 @@ const Signup = () => {
 
           <button type="submit" className="btn">Sign Up</button>
         </form>
+        {message && <p className="login-footer">{message}</p>}
         <p className="login-footer">
           Already have an account? <a href="/PeerTutor/#/login">Login</a>
         </p>
