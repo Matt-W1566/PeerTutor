@@ -1,0 +1,44 @@
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    width: 68%;
+    padding: 4.5vh 0;
+}
+
+.nav-title {
+    font-size: 2em;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    font-size: 1.4em;
+}
+
+li {
+    margin: 0 1em;
+}
+
+a {
+    text-decoration: none;
+    color: #1E0E62;
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: rgb(40, 90, 235);
+}
+
+.nav-login a {
+    border: 2px solid rgb(80, 130, 255);
+    border-radius: 9999px;
+    padding: 0.4em 1em;
+    transition: all 0.2s ease;
+}
+
+.nav-login a:hover {
+    color: white;
+    background-color: rgb(40, 90, 235);
+}
