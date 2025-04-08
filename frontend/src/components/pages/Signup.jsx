@@ -63,7 +63,7 @@ const Signup = () => {
         <button type="submit" className="btn">Sign Up</button>
       </form>
       <p className="login-footer">
-        Already have an account? <a href="/login">Login</a>
+        Already have an account? <a href="/PeerTutor/#/login">Login</a>
       </p>
     </div>
   )
