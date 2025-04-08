@@ -4,7 +4,7 @@ const router = express.Router();
 const authMiddleware = require('../Middleware/authMiddleware');
 const TutoringRequest = require('../models/TutoringRequest');
 const User = require('../models/User');
-const { sendEmail } = require('../utils/email'); // <--- new import
+const { sendEmail } = require('../utils/emails'); // <--- new import
 
 // Accept a request (tutor)
 router.patch('/:requestId/match', authMiddleware, async (req, res) => {
