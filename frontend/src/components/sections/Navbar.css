@@ -18,7 +18,7 @@
 }
 
 li {
-    margin: 0 1em;
+    margin: 0 1.2vw;
 }
 
 a {
@@ -41,4 +41,11 @@ a:hover {
 .nav-login a:hover {
     color: white;
     background-color: rgb(40, 90, 235);
+}
+
+@media screen and (max-width: 770px) {
+    .nav {
+        flex-direction: column;
+        padding-bottom: 0 !important;
+    }
 }
