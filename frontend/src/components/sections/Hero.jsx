@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <div className='hero'>
       <div className='hero-text'>
-        <div>
+        <div className='hero-text-content'>
             <h1 className='hero-title'>Learn smarter, connect faster</h1>
             <p className='hero-description'>PeerTutor connects students with the right peer tutors from your school, based on skills, schedules, and learning preferences—making learning more effective and accessible, whenever you need it.</p>
         </div>
