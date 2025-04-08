@@ -6,6 +6,22 @@
     margin-bottom: 1em;
 }
 
+.signup-wrapper {
+    margin: auto;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    max-width: 450px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 2rem;
+    background-color: hsl(189, 100%, 95%);
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.1);
+    color: #1E0E62;
+    padding-top: 1rem;
+}
+
 .select-wrapper select {
     padding: 2vh;
     font-size: 1.5em;
@@ -37,8 +53,4 @@
 
 .select-wrapper:hover::after {
     transform: translateY(-50%) rotate(180deg);
-}
-
-#root > div.login-container > form > button {
-    max-width: none;;
 }
