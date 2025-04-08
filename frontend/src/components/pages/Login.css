@@ -63,10 +63,8 @@ input::placeholder {
     margin: 2vh;
 }
 
-.login-footer a {
-    color: #4a90e2;
-    text-decoration: none;
-    font-weight: 500;
+.login-footer a:hover {
+    color: rgb(40, 90, 235);
 }
 
 .btn-login {
