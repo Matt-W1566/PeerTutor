@@ -1,0 +1,37 @@
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 80%;
+}
+
+.hero-title {
+    font-size: 3.5vw;
+    font-weight: 750;
+    margin-bottom: 0.5em;
+}
+
+.hero-description {
+    font-size: 2.5vh;
+    color: rgba(21, 20, 57, 0.4);
+    letter-spacing: .05em;
+    margin-bottom: 15%;
+}
+
+.hero-img {
+    width: 50%;
+    height: auto;
+}
+
+.hero-text {
+    width: 50%;
+    padding: 2.5em;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1em;
+    margin: 2em;
+    justify-content: space-between;
+}

@@ -1,0 +1,24 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-title {
+    font-size: 2em;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    font-size: 1.4em;
+}
+
+li {
+    margin: 0 0.4em;
+}
+
+a {
+    text-decoration: none;
+    color: #1E0E62;
+}
