@@ -30,6 +30,7 @@ const Login = () => {
         localStorage.setItem('token', data.token)
         console.log('Login successful:', data)
         navigate('/')
+        window.location.reload()
       } else {
         console.error('Login error:', data.error)
         setErrorMsg(data.error || 'Login failed.')
