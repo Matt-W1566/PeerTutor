@@ -1,9 +1,9 @@
 import React from 'react'
-import './Hero.css'
+import './Home.css'
 import heroImage from '../../assets/heroImage.png';
 import Button from '../elements/Button';
 
-const Hero = () => {
+const Home = () => {
   return (
     <div className='hero'>
       <div className='hero-text'>
@@ -21,4 +21,4 @@ const Hero = () => {
   )
 }
 
-export default Hero
+export default Home
