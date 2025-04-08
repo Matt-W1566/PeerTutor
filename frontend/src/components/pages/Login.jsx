@@ -28,7 +28,7 @@ const Login = () => {
         <button type="submit" className="btn btn-login">Login</button>
       </form>
       <p className="login-footer">
-        Don't have an account? <a href="/signup">Sign up</a>
+        Don't have an account? <a href="/PeerTutor/#/signup">Sign up</a>
       </p>
       </div>
     </div>
