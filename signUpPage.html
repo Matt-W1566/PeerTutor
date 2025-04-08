@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PeerTutor - Login</title>
+  <!-- Load a Google Font (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-qo4XZkh3mSk4CT9zi3UIbagIsElw2Xkp9JWA5ywoDVk06BMZAcEHGJr4UDf4pqfV9ZP9/Ow8SZfN6Cib+E3iNw==" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer" 
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <h2>Login</h2>
+
+      <form id="loginForm">
+        <!-- Email Field -->
+        <div class="input-group">
+          <label for="email">Email</label>
+          <div class="input-icon">
+            <i class="fas fa-user"></i>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required />
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="input-group">
+          <label for="password">Password</label>
+          <div class="input-icon">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required />
+            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+
+      <p class="signup-text">
+        Don’t have an account?
+        <a href="./signup.html">Sign up</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Show/Hide password toggle
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+
+    togglePassword.addEventListener('click', () => {
+      // Toggle the input type between password/text
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      // Toggle the eye icon
+      togglePassword.classList.toggle('fa-eye');
+      togglePassword.classList.toggle('fa-eye-slash');
+    });
+
+    // Example form submission (optional)
+    document.getElementById('loginForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      console.log('Submitted:', { email, password });
+      // TODO: Make a fetch/axios call to your back-end API
+    });
+  </script>
+</body>
+</html>
