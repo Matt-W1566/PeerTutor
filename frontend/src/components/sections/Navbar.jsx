@@ -27,7 +27,7 @@ const Navbar = () => {
         <li className='nav-faq'><a href='/PeerTutor/#/faq'>FAQ</a></li>
         <li className='nav-login'>
           {loggedIn ? (
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout} className='nav-login'>Logout</button>
           ) : (
             <a href='/PeerTutor/#/login'>Login</a>
           )}
